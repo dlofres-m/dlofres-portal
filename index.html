@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLoFre's Campus Guide | 北欧のライフスタイルを体験</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nordic-bg': '#F9F8F6', 
+                        'nordic-text': '#4A4A4A',
+                        'nordic-blue': '#6B8E9B', 
+                        'nordic-blue-hover': '#5A7A87',
+                        'nordic-accent': '#D4A373',
+                    },
+                    fontFamily: {
+                        'serif': ['"Noto Serif JP"', 'serif'],
+                        'sans': ['"Quicksand"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F9F8F6; color: #4A4A4A; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08); }
+        .btn-hover-effect { transition: all 0.3s ease; }
+        .btn-hover-effect:hover { transform: scale(1.02); }
+        
+        /* アニメーション関連 */
+        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        
+        /* タブ切り替え時のふわっと表示 */
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: grid; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* タブボタンのアクティブ状態 */
+        .tab-btn.active {
+            border-bottom-color: #6B8E9B; /* nordic-blue */
+            color: #6B8E9B;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-serif min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <header class="text-center max-w-2xl mx-auto mb-10 fade-in-up">
+        <p class="font-sans text-nordic-blue tracking-[0.2em] text-sm font-semibold mb-2">SCANDINAVIAN LIFESTYLE</p>
+        <h1 class="text-3xl md:text-4xl font-semibold mb-4 text-gray-800">DLoFre's Campus Guide</h1>
+        <p class="text-sm md:text-base text-gray-600 leading-relaxed text-left md:text-center">
+            静岡県浜松市・都田にある「ドロフィーズキャンパス」。<br>
+            北欧家具や美しい自然に囲まれた、心豊かになるライフスタイルを五感で味わう1日をご提案します。
+        </p>
+    </header>
+
+    <div class="flex justify-center space-x-2 sm:space-x-8 mb-12 border-b border-gray-200 w-full max-w-5xl font-sans text-sm sm:text-base fade-in-up delay-100">
+        <button onclick="switchTab('cafe')" id="btn-cafe" class="tab-btn active pb-3 px-2 sm:px-4 border-b-2 border-transparent text-gray-500 hover:text-nordic-blue transition-colors">
+            🍽️ カフェ＆ランチ
+        </button>
+        <button onclick="switchTab('interior')" id="btn-interior" class="tab-btn pb-3 px-2 sm:px-4 border-b-2 border-transparent text-gray-500 hover:text-nordic-blue transition-colors">
+            🛋️ インテリア・本
+        </button>
+        <button onclick="switchTab('stay')" id="btn-stay" class="tab-btn pb-3 px-2 sm:px-4 border-b-2 border-transparent text-gray-500 hover:text-nordic-blue transition-colors">
+            🏡 宿泊
+        </button>
+    </div>
+
+    <main class="w-full max-w-5xl mx-auto">
+
+        <div id="tab-cafe" class="tab-content active grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="cafe1.jpg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">DLoFre's Cafe</h2>
+                        <span class="text-xs font-sans bg-nordic-blue text-white px-2 py-1 rounded-full">Cafe & Sweets</span>
+                    </div>
+                    <div id="cafe1-news" class="mb-3 empty:hidden"></div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">築70年の古民家をリノベーションした空間。憧れの北欧名作家具に腰掛けながら、体に優しいランチや自家製スイーツを楽しめます。</p>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="9sense1.jpg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">9sense dining</h2>
+                        <span class="text-xs font-sans bg-gray-700 text-white px-2 py-1 rounded-full">Dining & Cafe</span>
+                    </div>
+                    <div id="cafe2-news" class="mb-3 empty:hidden"></div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">「空間と素材と料理」をテーマにした大人のためのダイニング。美しい食器と共に上質な時間を提供します。</p>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="deri1.jpg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">nordic deli</h2>
+                        <span class="text-xs font-sans bg-nordic-accent text-white px-2 py-1 rounded-full">Deli & Drink</span>
+                    </div>
+                    <div id="cafe3-news" class="mb-3 empty:hidden"></div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">北欧スローフードをカジュアルに楽しめるデリ。広大なキャンパスのお気に入りの場所でピクニック気分も味わえます。</p>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="ekicafe1.jpg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">MIYAKODA 駅Cafe</h2>
+                        <span class="text-xs font-sans bg-yellow-600 text-white px-2 py-1 rounded-full">Coffee & Retro</span>
+                    </div>
+                    <div id="cafe4-news" class="mb-3 empty:hidden"></div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">都田駅構内にあるカフェ。マリメッコのファブリックとヴィンテージ感が融合した空間で、サイフォンコーヒーを楽しめます。</p>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col md:col-span-2 max-w-2xl mx-auto w-full">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="soba1.jpg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">ソバデルチン</h2>
+                        <span class="text-xs font-sans bg-emerald-600 text-white px-2 py-1 rounded-full">Soba & Lunch</span>
+                    </div>
+                    <div id="cafe5-news" class="mb-3 empty:hidden"></div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">本格的で体に優しいお蕎麦。和の趣と北欧の空気感が交差する空間で、ホッと心落ち着くランチタイムをお楽しみいただけます。</p>
+                </div>
+            </article>
+        </div>
+
+        <div id="tab-interior" class="tab-content grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="interior1.jpg" alt="DLoFre's interior" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">DLoFre's interior</h2>
+                        <span class="text-xs font-sans bg-nordic-blue text-white px-2 py-1 rounded-full">Furniture & Goods</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">
+                        北欧の名作家具や照明、色鮮やかなファブリックから日々の暮らしを彩るヴィンテージ陶器まで。長く愛せる本物のインテリアに出会えるライフスタイルギャラリーです。
+                    </p>
+                    <div class="flex flex-col mt-auto font-sans">
+                        <a href="https://dlofre.jp/spots/dlofres-interior/" target="_blank" rel="noopener noreferrer" class="btn-hover-effect flex items-center justify-center w-full py-2.5 px-4 bg-nordic-blue text-white rounded-lg shadow-sm hover:bg-nordic-blue-hover">
+                            <i class="fas fa-globe mr-2"></i> 詳細を見る
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="book1.jpg" alt="蔵で旅するBookStore" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">蔵で旅するBookStore</h2>
+                        <span class="text-xs font-sans bg-gray-700 text-white px-2 py-1 rounded-full">Books & Culture</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">
+                        築100年以上の重厚な「蔵」をリノベーションした空間。建築、デザイン、オーガニックな暮らしに関する書籍が並び、本を通じて新しい世界と出会う静かな時間を過ごせます。
+                    </p>
+                    <div class="flex flex-col mt-auto font-sans">
+                        <a href="https://dlofre.jp/spots/bookstore/" target="_blank" rel="noopener noreferrer" class="btn-hover-effect flex items-center justify-center w-full py-2.5 px-4 bg-nordic-blue text-white rounded-lg shadow-sm hover:bg-nordic-blue-hover">
+                            <i class="fas fa-globe mr-2"></i> 詳細を見る
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div id="tab-stay" class="tab-content grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <article class="glass-card rounded-2xl overflow-hidden flex flex-col md:col-span-2 max-w-2xl mx-auto w-full">
+                <div class="h-48 bg-gray-200 relative overflow-hidden group">
+                    <img src="minka1.jpg" alt="白のMINKA" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">白のMINKA</h2>
+                        <span class="text-xs font-sans bg-nordic-accent text-white px-2 py-1 rounded-full">Hotel & Retreat</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-6 flex-grow">
+                        大人のためのクリエイティブな宿泊施設。ミニマルで洗練された空間デザインと、都田の豊かな自然に包まれながら、日常の喧騒から離れて心と体をリセットする特別な滞在を。
+                    </p>
+                    <div class="flex flex-col space-y-3 mt-auto font-sans">
+                        <a href="https://dlofre.jp/spots/shironominka/" target="_blank" rel="noopener noreferrer" class="btn-hover-effect flex items-center justify-center w-full py-2.5 px-4 bg-nordic-blue text-white rounded-lg shadow-sm hover:bg-nordic-blue-hover">
+                            <i class="fas fa-globe mr-2"></i> 宿泊予約・詳細
+                        </a>
+                        <a href="https://www.instagram.com/dlofres_shironominka/" target="_blank" rel="noopener noreferrer" class="btn-hover-effect flex items-center justify-center w-full py-2.5 px-4 bg-white border border-gray-200 text-gray-700 rounded-lg shadow-sm hover:border-[#E1306C] hover:text-[#E1306C]">
+                            <i class="fab fa-instagram mr-2 text-lg"></i> Instagram
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+    </main>
+
+    <footer class="mt-16 mb-12 text-center text-sm text-gray-400 w-full">
+        <p>※各施設の営業時間・定休日は公式サイト等で最新情報をご確認ください。</p>
+        <p class="mt-2 text-xs opacity-60 hover:opacity-100 transition-opacity">
+            <a href="https://dlofre.jp/" target="_blank" rel="noopener noreferrer" class="hover:text-nordic-blue">
+                DLoFre's Official Website <i class="fas fa-external-link-alt ml-1 text-[10px]"></i>
+            </a>
+        </p>
+        <p class="mt-6 font-sans text-xs tracking-wider">&copy; 2026 DLoFre's Campus Guide</p>
+    </footer>
+
+    <script>
+        // --- タブ切り替えロジック ---
+        function switchTab(tabId) {
+            // 全てのタブコンテンツを非表示
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            // 全てのタブボタンからアクティブ状態を解除
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+            // 選択されたタブとボタンをアクティブにする
+            document.getElementById('tab-' + tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // --- ブログニュース自動取得（カフェ用） ---
+        const commonFeedUrl = 'https://dlofre.jp/newscat/cafe-and-restaurant/feed/';
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(commonFeedUrl)}`;
+        const cafeIds = ['cafe1-news', 'cafe2-news', 'cafe3-news', 'cafe4-news', 'cafe5-news'];
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.items && data.items.length > 0) {
+                    const latestItem = data.items[0];
+                    cafeIds.forEach(id => {
+                        const targetElement = document.getElementById(id);
+                        if (targetElement) {
+                            targetElement.innerHTML = `
+                                <a href="${latestItem.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-xs font-semibold text-nordic-accent hover:text-nordic-blue transition-colors bg-orange-50 px-2 py-1.5 rounded border border-orange-100 shadow-sm w-full truncate">
+                                    <i class="fas fa-bullhorn mr-2 animate-pulse text-orange-400"></i>
+                                    <span class="truncate">Latest News: ${latestItem.title}</span>
+                                </a>
+                            `;
+                        }
+                    });
+                }
+            })
+            .catch(error => console.error('ブログ読み込みエラー:', error));
+    </script>
+</body>
+</html>
